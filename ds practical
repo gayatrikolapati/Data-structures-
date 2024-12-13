@@ -1,0 +1,1006 @@
+6a)Linear search:
+#include <stdio.h>
+#include <stdlib.h>
+int linearSearchRecursive(int arr[], int size, int key, int index) {
+if (index >= size)
+return -1;
+if (arr[index] == key)
+return index;
+return linearSearchRecursive(arr, size, key, index + 1);
+}
+int linearSearchIterative(int arr[], int size, int key) {
+for (int i = 0; i < size; i++) {
+if (arr[i] == key)
+return i;
+}
+return -1;
+}
+int main() {
+int *arr, size, key, choice;
+printf("Enter the number of elements in the array: ");
+scanf("%d", &size);
+arr = (int*)malloc(size * sizeof(int));
+printf("Enter the elements of the array:\n");
+for (int i = 0; i < size; i++) {
+printf("Element %d: ", i + 1);
+scanf("%d", &arr[i]);
+}
+printf("Enter the key value to search: ");
+scanf("%d", &key);
+printf("\nChoose search method:\n");printf("1. Recursive Linear Search\n");
+printf("2. Non-Recursive Linear Search\n");
+printf("Enter your choice: ");
+scanf("%d", &choice);
+int index;
+switch (choice) {
+case 1:
+index = linearSearchRecursive(arr, size, key, 0);
+if (index != -1)
+printf("Key %d found at index %d (Recursive)\n", key, index);
+else
+printf("Key %d not found (Recursive)\n", key);
+break;
+case 2:
+index = linearSearchIterative(arr, size, key);
+if (index != -1)
+printf("Key %d found at index %d (Non-Recursive)\n", key, index);
+else
+printf("Key %d not found (Non-Recursive)\n", key);
+break;
+default:
+printf("Invalid choice.\n");
+}
+free(arr);
+return 0;
+}
+6b)Binary Search:
+#include <stdio.h>
+#include <stdlib.h>
+int compare(const void *a, const void *b) {
+return ((int)a - (int)b);}
+int binarySearchRecursive(int arr[], int left, int right, int key) {
+if (left > right)
+return -1;
+int mid = left + (right - left) / 2;
+if (arr[mid] == key)
+return mid;
+else if (arr[mid] > key)
+return binarySearchRecursive(arr, left, mid - 1, key);
+else
+return binarySearchRecursive(arr, mid + 1, right, key);
+}
+int binarySearchIterative(int arr[], int size, int key) {
+int left = 0, right = size - 1;
+while (left <= right) {
+int mid = left + (right - left) / 2;
+if (arr[mid] == key)
+return mid;
+else if (arr[mid] < key)
+left = mid + 1;
+else
+right = mid - 1;
+}
+return -1;
+}
+int main() {
+int size, key, choice;
+printf("Enter the number of elements in the array: ");
+scanf("%d", &size);
+int arr[size];printf("Enter the elements of the array:\n");
+for (int i = 0; i < size; i++) {
+printf("Element %d: ", i + 1);
+scanf("%d", &arr[i]);
+}
+qsort(arr, size, sizeof(int), compare);
+printf("\nSorted Array: ");
+for (int i = 0; i < size; i++) {
+printf("%d ", arr[i]);
+}
+printf("\n");
+printf("Enter the key value to search: ");
+scanf("%d", &key);
+printf("\nChoose search method:\n");
+printf("1. Recursive Binary Search\n");
+printf("2. Non-Recursive Binary Search\n");
+printf("Enter your choice: ");
+scanf("%d", &choice);
+int index;
+switch (choice) {
+case 1:
+index = binarySearchRecursive(arr, 0, size - 1, key);
+if (index != -1)
+printf("Key %d found at index %d (Recursive)\n", key, index);
+else
+printf("Key %d not found (Recursive)\n", key);
+break;
+case 2:
+index = binarySearchIterative(arr, size, key);
+if (index != -1)
+printf("Key %d found at index %d (Non-Recursive)\n", key, index);else
+printf("Key %d not found (Non-Recursive)\n", key);
+break;
+default:
+printf("Invalid choice.\n");
+}
+return 0;
+}
+7a) stack using arrays:
+#include <stdio.h>
+#include <stdlib.h>
+#define MAX 5
+struct Stack {
+int arr[MAX];
+int top;
+};
+//stack creation
+void initstack(struct Stack* stack) {
+stack->top = -1;
+}
+int isfull(struct Stack* stack) {
+return stack->top == MAX - 1;
+}
+int isempty(struct Stack* stack) {
+return stack->top == -1;
+}
+void push(struct Stack* stack, int value) {
+if (isfull(stack)) {
+printf("Stack is full.\n");
+} else {
+stack->arr[++stack->top] = value;printf("The inserted value is %d\n", value);
+}
+}
+int pop(struct Stack* stack) {
+if (isempty(stack)) {
+printf("No elements to pop.\n");
+return -1;
+} else {
+int poppedValue = stack->arr[stack->top--];
+printf("%d popped from stack\n", poppedValue);
+return poppedValue;
+}
+}
+int main() {
+struct Stack* stack = (struct Stack*)malloc(sizeof(struct Stack));
+if (stack == NULL) {
+printf("Memory allocation failed.\n");
+return 1;
+}
+initstack(stack);
+int choice, value;
+while (1) {
+printf("\nStack operations menu\n");
+printf("1. Push\n");
+printf("2. Pop\n");
+printf("3. Exit\n");
+printf("Enter your choice: ");
+scanf("%d", &choice);
+switch (choice) {
+case 1:printf("Enter the value to be inserted: ");
+scanf("%d", &value);
+push(stack, value);
+break;
+case 2:
+pop(stack);
+break;
+case 3:
+printf("Exiting Program.\n");
+free(stack);
+exit(0);
+default:
+printf("Invalid choice\n");
+}
+}
+return 0;
+}
+7b) stack using linkedlist:
+#include <stdio.h>
+#include <stdlib.h>
+#define MAX 5
+struct node {
+int data;
+struct node* next;
+};
+struct Stack{
+struct node*top;
+};
+void initstack(struct Stack* stack) {
+stack->top = NULL;
+}int isfull(struct Stack* stack) {
+return 0;
+}
+int isempty(struct Stack* stack) {
+return stack->top ==NULL;
+}
+void push(struct Stack* stack, int value) {
+struct node*newnode=(struct node*)malloc(sizeof(struct node));
+newnode->data=value;
+newnode->next=stack->top;
+stack->top=newnode;
+printf("pushed %d onto the stack.\n",value);
+}
+int pop(struct Stack* stack) {
+if (isempty(stack)) {
+printf("No elements to pop.\n");
+return -1;
+} else {
+struct node* temp=stack->top;
+int poppedValue = temp->data;
+stack->top=stack->top->next;
+printf("%d popped from stack\n", poppedValue);
+free(temp);
+return poppedValue;
+}
+}
+int main() {
+struct Stack stack;
+initstack(&stack);
+int choice, value;
+while (1) {printf("\nStack operations menu\n");
+printf("1. Push\n");
+printf("2. Pop\n");
+printf("3. Exit\n");
+printf("Enter your choice: ");
+scanf("%d", &choice);
+switch (choice) {
+case 1:
+printf("Enter the value to be inserted: ");
+scanf("%d", &value);
+push(&stack, value);
+break;
+case 2:
+pop(&stack);
+break;
+case 3:
+printf("Exiting Program.\n");
+while(!isempty(&stack)){
+pop(&stack);
+}
+return 0;
+default:
+printf("Invalid choice\n");
+}
+}
+return 0;
+}
+8 a)infix to postfix:
+#include <stdio.h>
+#include <stdlib.h>
+#include <ctype.h>#define MAX 50
+struct Stack {
+int top;
+char items[MAX];
+};
+void initStack(struct Stack* s) {
+s->top = -1;
+}
+int isEmpty(struct Stack* s) {
+return s->top == -1;
+}
+void push(struct Stack* s, char item) {
+s->items[++(s->top)] = item;
+}
+char pop(struct Stack* s) {
+return s->items[(s->top)--];
+}
+char peek(struct Stack* s) {
+return s->items[s->top];
+}
+int precedence(char c) {
+if (c == '+' || c == '-') {
+return 1;
+} else if (c == '*' || c == '/') {
+return 2;
+} else if (c == '^') {
+return 3;
+}
+return 0;
+}int isOperator(char c) {
+return (c == '+' || c == '-' || c == '*' || c == '/' || c == '^');
+}
+void infixToPostfix(char* infix, char* postfix) {
+struct Stack s;
+initStack(&s);
+int i = 0, j = 0;
+char token;
+while ((token = infix[i++]) != '\0') {
+if (isalnum(token)) {
+postfix[j++] = token;
+} else if (token == '(') {
+push(&s, token);
+} else if (token == ')') {
+while (!isEmpty(&s) && peek(&s) != '(') {
+postfix[j++] = pop(&s);
+}
+pop(&s);
+} else if (isOperator(token)) {
+while (!isEmpty(&s) && precedence(peek(&s)) >= precedence(token)) {
+postfix[j++] = pop(&s);
+}
+push(&s, token);
+}
+}
+while (!isEmpty(&s)) {
+postfix[j++] = pop(&s);
+}
+postfix[j] = '\0';
+}int main() {
+char infix[MAX], postfix[MAX];
+printf("Enter the infix expression: ");
+scanf("%s", infix);
+infixToPostfix(infix, postfix);
+printf("Postfix expression: %s\n", postfix);
+return 0;
+}
+8b) queue using arrays:
+#include <stdio.h>
+#define MAX 50
+struct Queue {
+int items[MAX];
+int front, rear;
+};
+void initQueue(struct Queue* q) {
+q->front = -1;
+q->rear = -1;
+}
+int isFull(struct Queue* q) {
+return q->rear == MAX - 1;
+}
+int isEmpty(struct Queue* q) {
+return q->front == -1 || q->front > q->rear;
+}
+void enqueue(struct Queue* q, int value) {
+if (isFull(q)) return;
+if (q->front == -1) q->front = 0;
+q->items[++(q->rear)] = value;
+}int dequeue(struct Queue* q) {
+if (isEmpty(q)) return -1;
+return q->items[(q->front)++];
+}
+int peek(struct Queue* q) {
+if (isEmpty(q)) return -1;
+return q->items[q->front];
+}
+void display(struct Queue* q) {
+if (isEmpty(q)) return;
+for (int i = q->front; i <= q->rear; i++) {
+printf("%d ", q->items[i]);
+}
+printf("\n");
+}
+int main() {
+struct Queue q;
+initQueue(&q);
+int choice, value;
+do {
+printf("\n1. Enqueue\n2. Dequeue\n3. Peek\n4. Display\n5. Exit\nEnter your choice: ");
+scanf("%d", &choice);
+switch (choice) {
+case 1:
+printf("Enter value to enqueue: ");
+scanf("%d", &value);
+enqueue(&q, value);
+break;
+case 2:
+value = dequeue(&q);
+if (value == -1) printf("Queue is empty\n");else printf("Dequeued: %d\n", value);
+break;
+case 3:
+value = peek(&q);
+if (value == -1) printf("Queue is empty\n");
+else printf("Peek: %d\n", value);
+break;
+case 4:
+display(&q);
+break;
+}
+} while (choice != 5);
+return 0;
+}
+8c) queue using linkedlist:
+#include <stdio.h>
+#include <stdlib.h>
+struct Node {
+int data;
+struct Node* next;
+};
+struct Queue {
+struct Node *front, *rear;
+};
+void initQueue(struct Queue* q) {
+q->front = q->rear = NULL;
+}
+int isEmpty(struct Queue* q) {
+return q->front == NULL;
+}void enqueue(struct Queue* q, int value) {
+struct Node* temp = (struct Node*)malloc(sizeof(struct Node));
+temp->data = value;
+temp->next = NULL;
+if (q->rear == NULL) {
+q->front = q->rear = temp;
+return;
+} q
+->rear->next = temp;
+q->rear = temp;
+}
+int dequeue(struct Queue* q) {
+if (isEmpty(q)) return -1;
+struct Node* temp = q->front;
+int value = temp->data;
+q->front = q->front->next;
+if (q->front == NULL) q->rear = NULL;
+free(temp);
+return value;
+}
+int peek(struct Queue* q) {
+if (isEmpty(q)) return -1;
+return q->front->data;
+}
+void display(struct Queue* q) {
+struct Node* temp = q->front;
+while (temp != NULL) {
+printf("%d ", temp->data);
+temp = temp->next;
+}
+printf("\n");}
+int main() {
+struct Queue q;
+initQueue(&q);
+int choice, value;
+do {
+printf("\n1. Enqueue\n2. Dequeue\n3. Peek\n4. Display\n5. Exit\nEnter your choice: ");
+scanf("%d", &choice);
+switch (choice) {
+case 1:
+printf("Enter value to enqueue: ");
+scanf("%d", &value);
+enqueue(&q, value);
+break;
+case 2:
+value = dequeue(&q);
+if (value == -1) printf("Queue is empty\n");
+else printf("Dequeued: %d\n", value);
+break;
+case 3:
+value = peek(&q);
+if (value == -1) printf("Queue is empty\n");
+else printf("Peek: %d\n", value);
+break;
+case 4:
+if (isEmpty(&q)) printf("Queue is empty\n");
+else display(&q);
+break;
+}
+} while (choice != 5);
+return 0;}
+9 single linked listoperations:
+#include <stdio.h>
+#include <stdlib.h>
+struct Node {
+int data;
+struct Node* next;
+};
+struct Node* createNode(int value) {
+struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+newNode->data = value;
+newNode->next = NULL;
+return newNode;
+}
+void insertAtBeginning(struct Node** head, int value) {
+struct Node* newNode = createNode(value);
+newNode->next = *head;
+*head = newNode;
+}
+void insertAtEnd(struct Node** head, int value) {
+struct Node* newNode = createNode(value);
+if (*head == NULL) {
+*head = newNode;
+return;
+}
+struct Node* temp = *head;
+while (temp->next != NULL) {
+temp = temp->next;
+}
+temp->next = newNode;
+}void deleteByValue(struct Node** head, int value) {
+struct Node* temp = *head;
+struct Node* prev = NULL;
+if (temp != NULL && temp->data == value) {
+*head = temp->next;
+free(temp);
+return;
+}
+while (temp != NULL && temp->data != value) {
+prev = temp;
+temp = temp->next;
+}
+if (temp == NULL) return;
+prev->next = temp->next;
+free(temp);
+}
+void displayList(struct Node* head) {
+while (head != NULL) {
+printf("%d -> ", head->data);
+head = head->next;
+}
+printf("NULL\n");
+}
+int main() {
+struct Node* head = NULL;
+int choice, value;
+do {
+printf("\n1. Insert at beginning\n2. Insert at end\n3. Delete by value\n4. Display list\n5.
+Exit\nEnter your choice: ");
+scanf("%d", &choice);
+switch (choice) {case 1:
+printf("Enter value to insert at beginning: ");
+scanf("%d", &value);
+insertAtBeginning(&head, value);
+break;
+case 2:
+printf("Enter value to insert at end: ");
+scanf("%d", &value);
+insertAtEnd(&head, value);
+break;
+case 3:
+printf("Enter value to delete: ");
+scanf("%d", &value);
+deleteByValue(&head, value);
+break;
+case 4:
+displayList(head);
+break;
+}
+} while (choice != 5);
+return 0;
+}
+10)polynomial expression :
+#include <stdio.h>
+#include <stdlib.h>
+struct Node {
+int coeff;
+int pow;
+struct Node* next;
+};struct Node* createNode(int coeff, int pow) {
+struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+newNode->coeff = coeff;
+newNode->pow = pow;
+newNode->next = NULL;
+return newNode;
+}
+void insertEnd(struct Node** head, int coeff, int pow) {
+struct Node* newNode = createNode(coeff, pow);
+if (*head == NULL) {
+*head = newNode;
+return;
+}
+struct Node* temp = *head;
+while (temp->next != NULL) {
+temp = temp->next;
+}
+temp->next = newNode;
+}
+void displayPolynomial(struct Node* head) {
+while (head != NULL) {
+printf("%dx^%d", head->coeff, head->pow);
+head = head->next;
+if (head != NULL) printf(" + ");
+}
+printf("\n");
+}
+struct Node* addPolynomials(struct Node* poly1, struct Node* poly2) {
+struct Node* result = NULL;
+while (poly1 != NULL && poly2 != NULL) {if (poly1->pow > poly2->pow) {
+insertEnd(&result, poly1->coeff, poly1->pow);
+poly1 = poly1->next;
+} else if (poly1->pow < poly2->pow) {
+insertEnd(&result, poly2->coeff, poly2->pow);
+poly2 = poly2->next;
+} else {
+insertEnd(&result, poly1->coeff + poly2->coeff, poly1->pow);
+poly1 = poly1->next;
+poly2 = poly2->next;
+}
+}
+while (poly1 != NULL) {
+insertEnd(&result, poly1->coeff, poly1->pow);
+poly1 = poly1->next;
+}
+while (poly2 != NULL) {
+insertEnd(&result, poly2->coeff, poly2->pow);
+poly2 = poly2->next;
+}
+return result;
+}
+int main() {
+struct Node *poly1 = NULL, *poly2 = NULL, *result = NULL;
+int n1, n2, coeff, pow;
+printf("Enter the number of terms in the first polynomial: ");
+scanf("%d", &n1);
+printf("Enter the terms (coefficient and power) of the first polynomial:\n");
+for (int i = 0; i < n1; i++) {
+printf("Term %d: ", i + 1);
+scanf("%d %d", &coeff, &pow);insertEnd(&poly1, coeff, pow);
+}
+printf("Enter the number of terms in the second polynomial: ");
+scanf("%d", &n2);
+printf("Enter the terms (coefficient and power) of the second polynomial:\n");
+for (int i = 0; i < n2; i++) {
+printf("Term %d: ", i + 1);
+scanf("%d %d", &coeff, &pow);
+insertEnd(&poly2, coeff, pow);
+}
+printf("\nFirst Polynomial: ");
+displayPolynomial(poly1);
+printf("Second Polynomial: ");
+displayPolynomial(poly2);
+result = addPolynomials(poly1, poly2);
+printf("Resultant Polynomial: ");
+displayPolynomial(result);
+return 0;
+}
+11 a traversing:
+#include <stdio.h>
+#include <stdlib.h>
+struct Node {
+int data;
+struct Node *left, *right;
+};
+struct Node* createNode(int data) {
+struct Node* node = (struct Node*)malloc(sizeof(struct Node));
+node->data = data;
+node->left = node->right = NULL;
+return node;}
+struct Node* insert(struct Node* root, int data) {
+if (root == NULL) return createNode(data);
+if (data < root->data)
+root->left = insert(root->left, data);
+else
+root->right = insert(root->right, data);
+return root;
+}
+void preorderTraversal(struct Node* root) {
+if (root != NULL) {
+printf("%d ", root->data);
+preorderTraversal(root->left);
+preorderTraversal(root->right);
+}
+}
+void inorderTraversal(struct Node* root) {
+if (root != NULL) {
+inorderTraversal(root->left);
+printf("%d ", root->data);
+inorderTraversal(root->right);
+}
+}
+void postorderTraversal(struct Node* root) {
+if (root != NULL) {
+postorderTraversal(root->left);
+postorderTraversal(root->right);
+printf("%d ", root->data);
+}
+}int main() {
+struct Node* root = NULL;
+int n, value;
+printf("Enter the number of nodes in the binary tree: ");
+scanf("%d", &n);
+printf("Enter the values to insert into the binary tree:\n");
+for (int i = 0; i < n; i++) {
+printf("Enter value %d: ", i + 1);
+scanf("%d", &value);
+root = insert(root, value);
+}
+printf("\nPreorder Traversal: ");
+preorderTraversal(root);
+printf("\n");
+printf("Inorder Traversal: ");
+inorderTraversal(root);
+printf("\n");
+printf("Postorder Traversal: ");
+postorderTraversal(root);
+printf("\n");
+return 0;
+}
+11 b traversing:
+#include <stdio.h>
+#include <stdlib.h>
+struct Node {
+int data;
+struct Node *left, *right;
+};
+struct Node* createNode(int data) {
+struct Node* node = (struct Node*)malloc(sizeof(struct Node));node->data = data;
+node->left = node->right = NULL;
+return node;
+}
+struct Node* insert(struct Node* root, int data) {
+if (root == NULL) return createNode(data);
+if (data < root->data) root->left = insert(root->left, data);
+else root->right = insert(root->right, data);
+return root;
+}
+void preorderTraversal(struct Node* root) {
+if (root == NULL) return;
+struct Node* stack[100]; // Assuming tree size won't exceed 100 nodes
+int top = -1;
+stack[++top] = root;
+while (top >= 0) {
+struct Node* node = stack[top--];
+printf("%d ", node->data);
+if (node->right != NULL) stack[++top] = node->right;
+if (node->left != NULL) stack[++top] = node->left;
+}
+}
+void inorderTraversal(struct Node* root) {
+if (root == NULL) return;
+struct Node* stack[100]; // Assuming tree size won't exceed 100 nodes
+int top = -1;
+struct Node* current = root;
+while (top >= 0 || current != NULL) {
+while (current != NULL) {
+stack[++top] = current;
+current = current->left;}
+current = stack[top--];
+printf("%d ", current->data);
+current = current->right;
+}
+}
+void postorderTraversal(struct Node* root) {
+if (root == NULL) return;
+struct Node* stack[100]; // Assuming tree size won't exceed 100 nodes
+int top = -1;
+struct Node* lastVisited = NULL;
+struct Node* current = root;
+while (top >= 0 || current != NULL) {
+if (current != NULL) {
+stack[++top] = current;
+current = current->left;
+} else {
+struct Node* peekNode = stack[top];
+if (peekNode->right != NULL && lastVisited != peekNode->right) {
+current = peekNode->right;
+} else {
+printf("%d ", peekNode->data);
+lastVisited = stack[top--];
+}
+}
+}
+}
+int main() {
+struct Node* root = NULL;
+int n, value;
+printf("Enter the number of nodes in the binary tree: ");scanf("%d", &n);
+printf("Enter the values to insert into the binary tree:\n");
+for (int i = 0; i < n; i++) {
+printf("Enter value %d: ", i + 1);
+scanf("%d", &value);
+root = insert(root, value);
+}
+printf("\nPreorder Traversal: ");
+preorderTraversal(root);
+printf("\n");
+printf("Inorder Traversal: ");
+inorderTraversal(root);
+printf("\n");
+printf("Postorder Traversal: ");
+postorderTraversal(root);
+printf("\n");
+return 0;
+}
+14.Binary search trees:
+#include <stdio.h>
+#include <stdlib.h>
+struct Node {
+int data;
+struct Node *left, *right;
+};
+struct Node* createNode(int value) {
+struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+newNode->data = value;
+newNode->left = newNode->right = NULL;
+return newNode;
+}struct Node* insert(struct Node* root, int value) {
+if (root == NULL) {
+printf("Value %d inserted.\n", value);
+return createNode(value);
+}
+if (value < root->data) root->left = insert(root->left, value);
+else if (value > root->data) root->right = insert(root->right, value);
+return root;
+}
+struct Node* findMin(struct Node* root) {
+while (root->left != NULL) root = root->left;
+return root;
+}
+struct Node* deleteNode(struct Node* root, int value) {
+if (root == NULL) {
+printf("Value %d not found.\n", value);
+return root;
+}
+if (value < root->data) root->left = deleteNode(root->left, value);
+else if (value > root->data) root->right = deleteNode(root->right, value);
+else {
+printf("Value %d deleted.\n", value);
+if (root->left == NULL) {
+struct Node* temp = root->right;
+free(root);
+return temp;
+} else if (root->right == NULL) {
+struct Node* temp = root->left;
+free(root);return temp;
+}
+struct Node* temp = findMin(root->right);
+root->data = temp->data;
+root->right = deleteNode(root->right, temp->data);
+}
+return root;
+}
+void inorderTraversal(struct Node* root) {
+if (root != NULL) {
+inorderTraversal(root->left);
+printf("%d ", root->data);
+inorderTraversal(root->right);
+}
+}
+int main() {
+struct Node* root = NULL;
+int choice, value;
+while (1) {
+printf("\n\nBinary Search Tree Operations:\n");
+printf("1. Insert\n");
+printf("2. Delete\n");
+printf("3. Display (Inorder Traversal)\n");
+printf("4. Exit\n");
+printf("Enter your choice: ");
+scanf("%d", &choice);
+switch (choice) {
+case 1:
+printf("Enter value to insert: ");
+scanf("%d", &value);
+root = insert(root, value);break;
+case 2:
+printf("Enter value to delete: ");
+scanf("%d", &value);
+root = deleteNode(root, value);
+break;
+case 3:
+printf("Inorder Traversal: ");
+inorderTraversal(root);
+printf("\n");
+break;
+case 4:
+exit(0);
+default:
+printf("Invalid choice\n");
+}
+}
+return 0;
+}
+16 a)bubble sort:
+#include <stdio.h>
+void bubbleSort(int arr[], int n) {
+int i, j, temp;
+for (i = 0; i < n - 1; i++) {
+for (j = 0; j < n - i - 1; j++) {
+if (arr[j] > arr[j + 1]) {
+temp = arr[j];
+arr[j] = arr[j + 1];
+arr[j + 1] = temp;
+}
+}}
+}
+int main() {
+int n, i;
+printf("Enter the number of elements: ");
+scanf("%d", &n);
+int arr[n];
+printf("Enter %d elements: ", n);
+for (i = 0; i < n; i++) {
+scanf("%d", &arr[i]);
+}
+bubbleSort(arr, n);
+printf("Sorted array: ");
+for (i = 0; i < n; i++) {
+printf("%d ", arr[i]);
+}
+return 0;
+}
+16 b)Quick sort:
+#include <stdio.h>
+void swap(int *a, int *b) {
+int temp = *a;
+*a = *b;
+*b = temp;
+}
+int partition(int a[], int lb, int ub) {
+int pivot = a[lb];
+int start = lb;
+int end = ub;
+while (start < end) {
+while (a[start] <= pivot && start < ub) {start++;
+}
+while (a[end] > pivot) {
+end--;
+}
+if (start < end) {
+swap(&a[start], &a[end]);
+}
+}
+swap(&a[lb], &a[end]);
+return end;
+}
+void quickSort(int a[], int lb, int ub) {
+if (lb < ub) {
+int loc = partition(a, lb, ub);
+quickSort(a, lb, loc - 1);
+quickSort(a, loc + 1, ub);
+}
+}
+void printArray(int a[], int n) {
+for (int i = 0; i < n; i++) {
+printf("%d ", a[i]);
+}
+printf("\n");
+}
+int main() {
+int n;
+printf("Enter the number of elements: ");
+scanf("%d", &n);
+int a[n];
+printf("Enter the elements: ");for (int i = 0; i < n; i++) {
+scanf("%d", &a[i]);
+}
+quickSort(a, 0, n - 1);
+printf("Sorted array: ");
+printArray(a, n);
+return 0;
+}
+16 c) merge sort:
+#include <stdio.h>
+#include <stdlib.h>
+void mergesort(int A[], int lb, int ub);
+void merge(int A[], int lb, int mid, int ub);
+int main() {
+int n;
+printf("Enter the number of elements: ");
+scanf("%d", &n);
+int *A = (int *)malloc(n * sizeof(int));
+printf("Enter %d elements:\n", n);
+for (int i = 0; i < n; i++) {
+scanf("%d", &A[i]);
+}
+mergesort(A, 0, n - 1);
+printf("Sorted array:\n");
+for (int i = 0; i < n; i++) {
+printf("%d ", A[i]);
+}
+free(A);
+return 0;
+}void mergesort(int A[], int lb, int ub) {
+if (lb < ub) {
+int mid = (lb + ub) / 2;
+mergesort(A, lb, mid);
+mergesort(A, mid + 1, ub);
+merge(A, lb, mid, ub);
+}
+}
+void merge(int A[], int lb, int mid, int ub) {
+int i = lb, j = mid + 1, k = lb;
+int *B = (int *)malloc((ub + 1) * sizeof(int));
+while (i <= mid && j <= ub) {
+if (A[i] <= A[j]) {
+B[k++] = A[i++];
+} else {
+B[k++] = A[j++];
+}
+}
+while (i <= mid) {
+B[k++] = A[i++];
+}
+while (j <= ub) {
+B[k++] = A[j++];
+}
+for (k = lb; k <= ub; k++) {
+A[k] = B[k];
+}
+free(B);
+}
