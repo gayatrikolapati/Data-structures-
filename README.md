@@ -1,65 +1,671 @@
-1a)Even Natural Number #include<stdio.h> void main() { int n,sum=0,even,i; clrscr(); printf("Enter no. of terms: "); scanf("%d",&n); printf("First %d even natural numbers are: \n",n); for(i=1;i<=n;i++) { even=2*i; printf("%d ",even); sum+=even; } printf("\nSum of first %d even natural nums: %d\n",n,sum); getch(); }
-
-1b)Harmonic Series #include<stdio.h> void main() { int n,i; double sum = 0.0; clrscr(); printf("Enter no. of terms: "); scanf("%d", &n); printf("Harmonic series up to %d terms: \n",n); for(i=1;i<=n;i++) { printf("1/%d ",i); if(i<n) { printf("+ "); } sum+=1.0/i; } printf("\nSum of Harmonic series up to %d terms: %.6f\n",n,sum); getch(); }
-
-1c)Armstrong Number #include<stdio.h> #include<math.h> void main() { int num,originalNum,remainder,result=0,n=0; clrscr(); printf("Enter an integer: "); scanf("%d",&num); originalNum=num; while(originalNum!=0) { originalNum/=10; ++n; } originalNum=num; while(originalNum!=0) { remainder=originalNum%10; result+=pow(remainder,n); originalNum/=10; } if(result==num) printf("%d is Armstrong Num\n",num); else printf("%d is not Armstrong Num\n",num); getch(); }
-
-1d)Factorial #include<stdio.h> void main() { int n,i,fact=1; clrscr(); printf("Enter a num: "); scanf("%d",&n); if(n<0) printf("Factorial of negative num doesn't exist.\n"); else { for(i=1;i<=n;i++) fact*=i; printf("Factorial of %d is: %d\n",n,fact); } getch(); }
-
-2a)Matrix Multiplication #include<stdio.h> void main() #define SIZE 2 { int a[SIZE][SIZE]; int b[SIZE][SIZE]; int c[SIZE][SIZE]; int i,j,k; clrscr(); printf("Enter elements of matrix A(%dx%d):\n",SIZE,SIZE); for(i=0;i<SIZE;i++) { for(j=0;j<SIZE;j++) { scanf("%d",&a[i][j]); } } printf("Enter elements of matrix B(%dx%d):\n",SIZE,SIZE); for(i=0;i<SIZE;i++) { for(j=0;j<SIZE;j++) { scanf("%d",&b[i][j]); } } for(i=0;i<SIZE;i++) for(j=0;j<SIZE;j++) { c[i][j]=0; for(k=0;k<SIZE;k++) c[i][j]+=a[i][k]*b[k][j]; } printf("Result Matrix:\n"); for(i=0;i<SIZE;i++) { for(j=0;j<SIZE;j++) printf("%d ",c[i][j]); printf("\n"); } getch(); }
-
-2b)Transpose matrix #include<stdio.h> void main() { int i,j,rows,cols,matrix[10][10],transpose[10][10]; clrscr(); printf("Enter rows and columns: \n"); scanf("%d%d",&rows,&cols); printf("Enter matrix elements:\n"); for(i=0;i<rows;i++) for(j=0;j<cols;j++) scanf("%d",&matrix[i][j]); for(i=0;i<rows;i++) for(j=0;j<cols;j++) transpose[j][i] = matrix[i][j]; printf("Transpose:\n"); for(i=0;i<cols;i++) { for(j=0;j<rows;j++) { printf("%d ",transpose[i][j]); } printf("\n"); } getch(); }
-
-3a)Prime number #include<stdio.h> int isPrime(int n) { int i; if(n<=1) return 0; for(i=2;i*i<=n;i++) { if(n%i==0) return 0; } return 1; } void main() { int n; clrscr(); printf("Enter a number: "); scanf("%d",&n); if(isPrime(n)) printf("%d is prime\n",n); else printf("%d is not prime\n",n); getch(); }
-
-3b)Fibonacci Number #include<stdio.h> int fibonacci(int n) { if(n<=1) return n; return fibonacci(n-1)+fibonacci(n-2); } void main() { int n; clrscr(); printf("Enter the value of n: "); scanf("%d",&n); if(n<0) { printf("Fibonacci is undefined for negative numbers\n"); } else { printf("Fibonacci number at position %d is %d\n",n,fibonacci(n)); } getch(); }
-
-3c)Add 2 nums using call by reference #include<stdio.h> void addNumbers(int *a,int *b,int *result) { *result = *a + *b; } void main() { int num1,num2,sum; clrscr(); printf("Enter first num: \n"); scanf("%d",&num1); printf("Enter second num:\n"); scanf("%d",&num2); addNumbers(&num1,&num2,&sum); printf("Sum of %d and %d is %d.\n",num1,num2,sum); getch(); }
-
-4a)Append lines at end of txt file #include<stdio.h> #include<conio.h> void main() { FILE *p; int i,n; char str[100]; char fname[20]; char str1; clrscr(); printf("Input the file name to be opened: "); scanf("%s",fname); p = fopen(fname,"a"); printf("Input the number of lines to be written: "); scanf("%d",&n); printf("The lines are: \n"); for(i=0;i<(n+1);i++) { fgets(str,sizeof(str),stdin); fputs(str,p); } fclose(p); p = fopen(fname,"r"); printf("\nThe content of the file is:\n",fname); str1 = fgetc(p); while(str1!=EOF) { printf("%c",str1); str1 = fgetc(p); } fclose(p); getch(); }
-
-4b)Copy a file #include<stdio.h> #include<stdlib.h> void main() { FILE *sf,*tf; char sp[100],tp[100],c; clrscr(); printf("Enter source path: \n"); scanf("%s",sp); printf("Enter target path: \n"); scanf("%s",tp); if((sf=fopen(sp,"r"))==NULL) { printf("Error: Cannot open source file\n"); exit(EXIT_FAILURE); } if((tf=fopen(tp,"w"))==NULL) { fclose(sf); printf("Error: Cannot open target file\n"); exit(EXIT_FAILURE); } while((c=fgetc(sf))!=EOF) fputc(c,tf); printf("File Copied Successfully\n"); fclose(sf); fclose(tf); getch(); }
-
-5a)Factorial //Recursive #include<stdio.h> int fact(int n) { return n<=1 ? 1:nfact(n-1); } void main() { int n; clrscr(); printf("Enter num: "); scanf("%d",&n); printf("Factorial of %d is %d\n",n,fact(n)); getch(); } //Non-recursive #include<stdio.h> int fact(int n) { int f=1; while(n>1) f=n--; return f; } void main() { int n; clrscr(); printf("Enter a num: "); scanf("%d",&n); printf("Factorial of %d is %d\n",n,fact(n)); getch(); }
-
-5b)GCD //recursive #include<stdio.h> int gcd(int a,int b) { return b==0 ? a:gcd(b,a%b); } void main() { int n,m; clrscr(); printf("Enter values\n"); scanf("%d%d",&n,&m); printf("GCD is %d\n",gcd(n,m)); getch(); } //non-recursive #include<stdio.h> int gcd(int a,int b) { while(b) { int temp=b; b=a%b; a=temp; } return a; } void main() { int n,m; clrscr(); printf("Enter values\n"); scanf("%d%d",&n,&m); printf("GCD is %d\n",gcd(n,m)); getch(); }
-
-5c)Towers of Hanoi //recursive #include<stdio.h> void hanoi(int n,char S,char D,char I) { if(n==1) { printf("Move disk 1 from %c to %c\n",S,D); return; } hanoi(n-1,S,I,D); printf("Move disk %d from %c to %c\n",n,S,D); hanoi(n-1,I,D,S); } void main() { int n; clrscr(); printf("Enter no. of disks: "); scanf("%d",&n); printf("S-Source\nI-Intermediary\nD-Destination\n"); hanoi(n,'S','D','I'); getch(); } //non-recursive #include<stdio.h> int z(int n) { int c=0; while((n&1)==0) { c++; n>>=1; } return c; } void h(int n,char s,char d,char i) { int k,m=(1<<n)-1; for(k=1;k<=m;k++) { int f=(k&k-1)%3, t=(3-f-(k%3))%3, d=z(k)+1; printf("Move disk %d from %c to %c\n",d,"SDI"[f],"SDI"[t]); } } void main() { int n; clrscr(); printf("Enter no. of disks: "); scanf("%d",&n); printf("S-Source\nI-Intermediary\nD-Destination\n"); h(n,'S','D','I'); getch(); }
-
-6a)Linear search #include<stdio.h> int linearSearchNonRecursive(int arr[],int n,int key) { int i; for(i=0;i<n;i++) if(arr[i]==key) return i; return -1; } int linearSearchRecursive(int arr[],int n,int key) { return n==0 ? -1:(arr[n-1]==key ? n-1:linearSearchRecursive(arr,n-1,key)); } void main() { int i,n,key,res1,res2; int arr[30]; clrscr(); printf("Enter number of elements: "); scanf("%d",&n); printf("Enter %d elements: \n",n); for(i=0;i<n;i++) scanf("%d",&arr[i]); printf("Enter key to search: "); scanf("%d",&key); res1=linearSearchNonRecursive(arr,n,key); res2=linearSearchRecursive(arr,n,key); printf("Non-Recursive : %s\n",res1!=-1?"Key found":"Key not found"); printf("Recursive : %s\n",res2!=-1?"Key found":"Key not found"); getch(); }
-
-6b)Binary search #include<stdio.h> int binarySearchRecursive(int arr[],int low,int high,int key) { if(low<=high) { int mid=low+(high-low)/2; if(arr[mid]==key) return mid; return (arr[mid]<key)?binarySearchRecursive(arr,mid+1,high,key):binarySearchRecursive(arr,low,mid-1,key); } return -1; } int binarySearchIterative(int arr[],int n,int key) { int low=0,high=n-1,mid; while(low<=high) { mid=low+(high-low)/2; if(arr[mid]==key) return mid; (arr[mid]<key)?(low=mid+1):(high=mid-1); } return -1; } void main() { int n,key,result,i,arr[30]; clrscr(); printf("Number of elements: "); scanf("%d",&n); printf("Enter %d elements: \n",n); for(i=0;i<n;i++) scanf("%d",&arr[i]); printf("Key: "); scanf("%d",&key); result=binarySearchIterative(arr,n,key); printf("Non-recursive : %s\n",result!=-1?"Key found":"Key not found"); result=binarySearchRecursive(arr,0,n-1,key); printf("Recursive : %s\n",result!=-1?"Key found":"Key not found"); getch(); }
-
-7a)Stack using array #include <stdio.h> #define MAX 3 typedef struct { int items[3]; int top; } Stack; void initStack(Stack* s) { s->top = -1; } int isFull(Stack* s) { return s->top == MAX - 1; }
-
-int isEmpty(Stack* s) { return s->top == -1; } void push(Stack* s, int value) { if (isFull(s)) printf("Stack Overflow! Cannot push %d\n", value); else s->items[++s->top] = value; } int pop(Stack* s) { return isEmpty(s) ? (printf("Stack Underflow!\n"), -1) : s->items[s->top--]; } int peek(Stack* s) { return isEmpty(s) ? (printf("Stack is empty\n"), -1) : s->items[s->top]; } void display(Stack* s) { int i; if (isEmpty(s)) printf("Stack is empty\n"); else for (i = s->top; i >= 0; i--) printf("%d\n", s->items[i]); } void main() { int choice, value; Stack s; clrscr(); initStack(&s); do { printf("\n1. Push\n2. Pop\n3. Peek\n4. Display\n5. Exit\nChoice: "); scanf("%d", &choice); switch (choice) { case 1: printf("Enter value to push: "); scanf("%d", &value); push(&s, value); break; case 2: value = pop(&s); if (value != -1) printf("Popped value: %d\n", value); break; case 3: value = peek(&s); if (value != -1) printf("Top element: %d\n", value); break; case 4: printf("Stack elements:\n"); display(&s); break; case 5: printf("Exiting...\n"); break; default:printf("Invalid choice! Please enter a valid option.\n"); } } while (choice != 5); }
-
-7b)stack using linked list #include <stdio.h> #include <stdlib.h> struct Node { int data; struct Node* next; } top = NULL; void push(int value) { struct Node newNode = (struct Node*)malloc(sizeof(struct Node)); if (!newNode) return; newNode->data = value; newNode->next = top; top = newNode; } void pop() { struct Node* temp = top; if (!top) { printf("Stack Underflow\n"); return; } printf("Popped %d\n", temp->data); top = top->next; free(temp); } void peek() { if (top) printf("Top element is %d\n", top->data); else printf("Stack is empty\n"); } void display() { struct Node* temp = top; while (temp) { printf("%d ", temp->data); temp = temp->next; } printf("\n"); } void main() { int choice, value; clrscr(); while (1) { printf("\n1. Push\n2. Pop\n3. Peek\n4. Display\n5. Exit\nChoose: "); scanf("%d", &choice); switch (choice) { case 1: printf("Enter value: "); scanf("%d", &value); push(value); break; case 2: pop(); break; case 3: peek(); break; case 4: display(); break; case 5: exit(0); default: printf("Invalid choice.\n"); } } }
-
-8a)Infix to postfix #include <stdio.h> #include <stdlib.h> #include <ctype.h> #define MAX 30 typedef struct { int top; char items[30]; } Stack; void initStack(Stack *s) { s->top = -1; } int isEmpty(Stack *s) { return s->top == -1; } void push(Stack s, char item) { s->items[++s->top] = item; } char pop(Stack s) { return s->items[s->top--]; } char peek(Stack s) { return s->items[s->top]; } int precedence(char op) { return (op == '+' || op == '-') ? 1 : (op == '' || op == '/') ? 2 : (op == '^') ? 3 : 0; } void infixToPostfix(char infix, char postfix) { int i = 0, j = 0; Stack s; initStack(&s); while (infix[i]) { char ch = infix[i++]; if (isalnum(ch)) postfix[j++] = ch; else if (ch == '(') push(&s, ch); else if (ch == ')') { while (!isEmpty(&s) && peek(&s) != '(') postfix[j++] = pop(&s); pop(&s); } else { while (!isEmpty(&s) && precedence(peek(&s)) >= precedence(ch)) postfix[j++] = pop(&s); push(&s, ch); } } while (!isEmpty(&s)) postfix[j++] = pop(&s); postfix[j] = '\0'; } void main() { char infix[MAX], postfix[MAX]; clrscr(); printf("Enter infix expression: "); scanf("%s", infix); infixToPostfix(infix, postfix); printf("Postfix: %s\n", postfix); getch(); }
-
-8b)Queue using array #include <stdio.h> #include <stdlib.h> #define MAX 3 struct Queue { int arr[3]; int front, rear; }; void initQueue(struct Queue* q) { q->front = q->rear = -1; } int isFull(struct Queue* q) { return q->rear == MAX - 1; } int isEmpty(struct Queue* q) { return q->front == -1; } void enqueue(struct Queue* q, int value) { if (isFull(q)) { printf("Queue is full!\n"); } else { if (q->front == -1) q->front = 0; q->arr[++q->rear] = value; printf("%d enqueued.\n", value); } } int dequeue(struct Queue* q) { if (isEmpty(q)) { printf("Queue is empty!\n"); return -1; } else { int value = q->arr[q->front]; if (q->front == q->rear) { q->front = q->rear = -1; } else { q->front++; } return value; } } void display(struct Queue* q) { int i; if (isEmpty(q)) { printf("Queue is empty.\n"); } else { printf("Queue: "); for ( i = q->front; i <= q->rear; i++) { printf("%d ", q->arr[i]); } printf("\n"); } } void main() { struct Queue q; int choice, value; clrscr(); initQueue(&q); do { printf("\n1. Enqueue\n2. Dequeue\n3. Display\n4. Exit\nChoice: "); scanf("%d", &choice); switch (choice) { case 1: printf("Enter value to enqueue: "); scanf("%d", &value); enqueue(&q, value); break; case 2: value = dequeue(&q); if (value != -1) { printf("Dequeued: %d\n", value); } break; case 3: display(&q); break; case 4: printf("Exiting...\n"); break; default: printf("Invalid choice. Try again.\n"); } } while (choice != 4); }
-
-8c)Queue using linked list #include <stdio.h> #include <stdlib.h> struct Node { int data; struct Node* next; }; struct Queue { struct Node front, rear; }; void initQueue(struct Queue q) { q->front = q->rear = NULL; } int isEmpty(struct Queue q) { return !q->front; } void enqueue(struct Queue* q, int value) { struct Node* newNode = (struct Node*)malloc(sizeof(struct Node)); newNode->data = value; newNode->next = NULL; if (isEmpty(q)) q->front = q->rear = newNode; else { q->rear->next = newNode; q->rear = newNode; } } int dequeue(struct Queue* q) { struct Node* temp; int value; if (isEmpty(q)) return -1; temp = q->front; value = temp->data; q->front = q->front->next; if (!q->front) q->rear = NULL; free(temp); return value; } int peek(struct Queue* q) { return isEmpty(q) ? -1 : q->front->data; } void display(struct Queue* q) { struct Node* temp; for (temp = q->front; temp; temp = temp->next) printf("%d ", temp->data); printf("\n"); } void main() { struct Queue q; int choice, value; clrscr(); initQueue(&q); do { printf("\n1. Enqueue\n2. Dequeue\n3. Peek \n4. Display \n5. Exit\nChoice:"); scanf("%d", &choice); switch (choice) { case 1: printf("Enter value to enqueue: "); scanf("%d", &value); enqueue(&q, value); break; case 2: value = dequeue(&q); if (value == -1) printf("Queue is empty.\n"); else printf("Dequeued: %d\n", value); break; case 3: value = peek(&q); if (value == -1) printf("Queue is empty.\n"); else printf("Front : %d\n", value); break; case 4: display(&q); break; case 5: printf("Exiting program.\n"); break; default: printf("Invalid choice. Try again.\n"); } } while (choice != 5); }
-
-9)Singly linked list #include <stdio.h> #include <stdlib.h> struct node { int data; struct node *next; } *head = NULL; void insert(int pos, int val) { int i; struct node *new_node = (struct node *)malloc(sizeof(struct node)), *temp = head; new_node->data = val; if (pos == 1 || !head) { new_node->next = head; head = new_node; } else { for ( i = 1; i < pos - 1 && temp->next; i++) temp = temp->next; new_node->next = temp->next; temp->next = new_node; } printf("%d inserted at position %d\n", val, pos); } void delet(int pos) { int i; struct node *temp = head, *prev = NULL; if (!head) { printf("List is empty\n"); return; } if (pos == 1) { head = head->next; } else { for ( i = 1; i < pos && temp; i++) { prev = temp; temp = temp->next; } if (!temp) { printf("Position out of bounds\n"); return; } prev->next = temp->next; } printf("%d deleted from position %d\n", temp->data, pos); free(temp); } int display() { int i=0; struct node *temp = head; printf("START -> "); while (temp) { printf("%d -> ", temp->data); temp = temp->next; i++;} printf("NULL\n"); printf("Length=%d\n",i); } void search(int val) { struct node *temp = head; int pos = 1; while (temp) { if (temp->data == val) { printf("Value %d found at position %d\n", val, pos); return; } temp = temp->next; pos++; } printf("Value %d not found\n", val); } void main() { int choice, value, pos; clrscr(); while (1) { printf("\n1. Insert\n2. Delete\n3. Display\n4. Search\n5. Exit\nChoose: "); scanf("%d", &choice); if (choice == 5) break; switch (choice) { case 1: printf("Enter position and value: \n"); scanf("%d %d", &pos, &value); insert(pos, value); break; case 2: printf("Enter position: "); scanf("%d", &pos); delet(pos); break; case 3: display(); break; case 4: printf("Enter value to search: "); scanf("%d", &value); search(value); break; default: printf("Invalid choice\n"); } } }
-
-10)Polynomial addition #include<stdio.h> #include<conio.h> typedef struct Node{int coeff, exp; struct Node* next; }Node; Node* insert(Node* h,int c,int e){ Node* n = (Node*)malloc(sizeof(Node)), t=h; n->coeff=c; n->exp=e; n->next=NULL; if(!h||e > h->exp) { n->next=h; return n; } while(t->next && t->next->exp >= e) t=t->next; n->next=t->next; t->next=n; return h; } Node addPoly(Node* p1,Node* p2) { Node* r = NULL; while(p1||p2) { int c=0,e; if(p1 && (!p2 || p1->exp > p2->exp)) c=p1->coeff,e=p1->exp,p1=p1->next; else if(p2&&(!p1||p2->exp > p1->exp)) c=p2->coeff,e=p2->exp,p2=p2->next; else c=p1->coeff+p2->coeff,e=p1->exp,p1=p1->next,p2=p2->next; if(c) r=insert(r,c,e); } return r; } void printPoly(Node* h) { while(h) { printf(h->next?"%dx^%d + ":"%dx^%d",h->coeff,h->exp); h=h->next; } printf("\n"); } void main() { Node *p1=NULL, *p2=NULL; clrscr(); p1=insert(p1,5,3); p1=insert(p1,3,2); p1=insert(p1,6,0); p2=insert(p2,6,2); p2=insert(p2,2,1); printf("P1: "); printPoly(p1); printf("P2: "); printPoly(p2); printf("P1+P2: "); printPoly(addPoly(p1,p2)); getch(); }
-
-11a)Binary tree - recursive #include <stdio.h> #include <stdlib.h> struct Node { int data; struct Node left, right; }; struct Node createNode(int data) { struct Node newNode = (struct Node*)malloc(sizeof(struct Node)); newNode->data = data; newNode->left = newNode->right = NULL; return newNode; } void preorderTraversal(struct Node* root) { if (!root) return; printf("%d ", root->data); preorderTraversal(root->left); preorderTraversal(root->right); } void inorderTraversal(struct Node* root) { if (!root) return; inorderTraversal(root->left); printf("%d ", root->data); inorderTraversal(root->right); } void postorderTraversal(struct Node* root) { if (!root) return; postorderTraversal(root->left); postorderTraversal(root->right); printf("%d ", root->data); } void main() { struct Node* root = createNode(1); clrscr(); root->left = createNode(2); root->right = createNode(3); root->left->left = createNode(4); root->left->right = createNode(5); printf("Preorder Traversal: "); preorderTraversal(root); printf("\nInorder Traversal: "); inorderTraversal(root); printf("\nPostorder Traversal: "); postorderTraversal(root); printf("\n"); getch(); }
-
-11b)Binary tree - non-recursive #include <stdio.h> #include <stdlib.h> struct Node { int data; struct Node* left; struct Node* right; }; struct Stack { struct Node* node; struct Stack* next; }; struct Node* createNode(int data) { struct Node* newNode = (struct Node*)malloc(sizeof(struct Node)); newNode->data = data; newNode->left = newNode->right = NULL; return newNode; } void push(struct Stack** top, struct Node* node) { struct Stack* newStackNode = (struct Stack*)malloc(sizeof(struct Stack)); newStackNode->node = node; newStackNode->next = top; top = newStackNode; } struct Node pop(struct Stack* top) { struct Stack* temp; struct Node* node; if (top == NULL) return NULL; temp = top; node = temp->node; top = (top)->next; free(temp); return node; } void preorder(struct Node root) { struct Stack stack; if (!root) return; stack = NULL; push(&stack, root); while (stack) { struct Node curr = pop(&stack); printf("%d ", curr->data); if (curr->right) push(&stack, curr->right); if (curr->left) push(&stack, curr->left); }} void inorder(struct Node root) { struct Stack* stack = NULL; struct Node* curr = root; while (curr || stack) { while (curr) { push(&stack, curr); curr = curr->left; } curr = pop(&stack); printf("%d ", curr->data); curr = curr->right; }} void postorder(struct Node* root) { struct Stack stack1,stack2; if (!root) return; stack1 = NULL; stack2 = NULL; push(&stack1, root); while (stack1) { struct Node curr = pop(&stack1); push(&stack2, curr); if (curr->left) push(&stack1, curr->left); if (curr->right) push(&stack1, curr->right); } while (stack2) printf("%d ", pop(&stack2)->data); } void main() { struct Node root = createNode(1); clrscr(); root->left = createNode(2); root->right = createNode(3); root->left->left = createNode(4); root->left->right = createNode(5); root->right->left = createNode(6); root->right->right = createNode(7); printf("Preorder: "); preorder(root); printf("\nInorder: "); inorder(root); printf("\nPostorder: "); postorder(root); getch(); }
-
-13)Hash table #include <stdio.h> #include <stdlib.h> #define TABLE_SIZE 11 #define EMPTY -1 #define DELETED -2 typedef struct { int key, value; } HashItem; HashItem* table[TABLE_SIZE] = {NULL}; int h1(int key) { return key % TABLE_SIZE; } int h2(int key) { return 1 + (key % (TABLE_SIZE - 1)); } void insert(int key, int value) {int i, idx; for ( i = 0, idx = h1(key); ; idx = (h1(key) + ++i * h2(key)) % TABLE_SIZE) { if (!table[idx] || table[idx]->key == EMPTY || table[idx]->key == DELETED) { if (!table[idx]) table[idx] = malloc(sizeof(HashItem)); table[idx]->key = key, table[idx]->value = value; return; }}} int search(int key) { int i, idx; for ( i = 0, idx = h1(key); table[idx]; idx = (h1(key) + ++i * h2(key)) % TABLE_SIZE) if (table[idx]->key == key) return table[idx]->value; return -1; } void delete(int key) { int i, idx; for ( i = 0, idx = h1(key); table[idx]; idx = (h1(key) + ++i * h2(key)) % TABLE_SIZE) if (table[idx]->key == key) { table[idx]->key = DELETED; return; } } void display() { int i; for ( i = 0; i < TABLE_SIZE; i++) { if (!table[i]) printf("[%d]: EMPTY\n", i); else if (table[i]->key == DELETED) printf("[%d]: DELETED\n", i); else printf("[%d]: Key=%d, Value=%d\n", i, table[i]->key, table[i]->value); } } void main() { clrscr(); insert(12, 120), insert(26, 260), insert(31, 310), insert(17, 170), insert(90, 900); display(), printf("Search key 31: %d\n", search(31)); delete(31), display(); getch(); }
- 13)hash by me:#include <stdio.h> #include <stdlib.h> #define TABLE_SIZE 10 #define EMPTY -1 int hash1(int key) { return key % TABLE_SIZE; } int hash2(int key) { return 7 - (key % 7); } void insert(int hashTable[], int key) { int index = hash1(key), step = hash2(key), i = 0; while (hashTable[(index + i * step) % TABLE_SIZE] != EMPTY) { i++; if (i == TABLE_SIZE) { printf("Hash table is full. Cannot insert key %d.\n", key); return; } } hashTable[(index + i * step) % TABLE_SIZE] = key; printf("Inserted key %d at index %d\n", key, (index + i * step) % TABLE_SIZE); } int search(int hashTable[], int key) { int index = hash1(key), step = hash2(key), i = 0; while (hashTable[(index + i * step) % TABLE_SIZE] != EMPTY) { if (hashTable[(index + i * step) % TABLE_SIZE] == key) return (index + i * step) % TABLE_SIZE; i++; if (i == TABLE_SIZE) break; } return -1; } void display(int hashTable[]) { printf("\nHash Table:\n"); for (int i = 0; i < TABLE_SIZE; i++) { if (hashTable[i] == EMPTY) printf("[%d]: EMPTY\n", i); else printf("[%d]: %d\n", i, hashTable[i]); } } int main() { int hashTable[TABLE_SIZE], choice, key; for (int i = 0; i < TABLE_SIZE; i++) hashTable[i] = EMPTY; do { printf("\nMenu:\n1. Insert\n2. Search\n3. Display\n4. Exit\nEnter your choice: "); scanf("%d", &choice); switch (choice) { case 1: printf("Enter key to insert: "); scanf("%d", &key); insert(hashTable, key); break; case 2: printf("Enter key to search: "); scanf("%d", &key); int index = search(hashTable, key); if (index != -1) printf("Key %d found at index %d\n", key, index); else printf("Key %d not found in the hash table\n", key); break; case 3: display(hashTable); break; case 4: printf("Exiting...\n"); break; default: printf("Invalid choice. Please try again.\n"); } } while (choice != 4); return 0; }
+4)emulate the UNIX ls –l command
+#include <stdio.h>
+#include <conio.h>
+#include <dos.h>
+#include <dir.h>
+#include <time.h>
+void display_file_info(struct ffblk file);
+void main()
+{
+struct ffblk file;
+int done;
+clrscr();
+done = findfirst("*.*", &file, FA_ARCH | FA_RDONLY | FA_HIDDEN | FA_DIREC);
+printf("Attributes    Size    Date      Time     Name\n");
+printf("------------------------------------------------------\n");
+while (!done) 
+{
+display_file_info(file);
+done = findnext(&file);
+}
+getch();
+}
+void display_file_info(struct ffblk file)
+{
+struct tm *time_info;
+unsigned year, month, day, hour, minute, second;
+printf("%c", (file.ff_attrib & FA_RDONLY) ? 'r' : '-');
+printf("%c", (file.ff_attrib & FA_HIDDEN) ? 'h' : '-');
+printf("%c", (file.ff_attrib & FA_SYSTEM) ? 's' : '-');
+printf("%c", (file.ff_attrib & FA_DIREC) ? 'd' : '-');
+printf("%c", (file.ff_attrib & FA_ARCH) ? 'a' : '-');
+printf("    ");
+printf("%8lu", file.ff_fsize);
+year = ((file.ff_fdate >> 9) & 0x7F) + 1980;
+month = (file.ff_fdate >> 5) & 0x0F;
+day = file.ff_fdate & 0x1F;
+hour = (file.ff_ftime >> 11) & 0x1F;
+minute = (file.ff_ftime >> 5) & 0x3F;
+second = (file.ff_ftime & 0x1F) * 2;
+printf("  %02d-%02d-%04d", day, month, year);
+printf("  %02d:%02d:%02d", hour, minute, second);
+printf("  %s\n", file.ff_name);
+}
 
 
+5)how to execute two commands concurrently with a command pipe. Ex: - ls –l | sort
+#include<stdio.h>
+#include<stdlib.h>
+void main()
+{
+clrscr();
+system("dir | sort");
+//system("ls -l | sort");
+getch();
+}
 
-14)Binary search tree #include <stdio.h> #include <stdlib.h> struct Node { int value; struct Node left, right; }; struct Node newNode(int value) { struct Node n = (struct Node*)malloc(sizeof(struct Node)); n->value = value; n->left = n->right = NULL; return n; } struct Node* insert(struct Node* root, int value) { if (!root) return newNode(value); if (value < root->value) root->left = insert(root->left, value); else if (value > root->value) root->right = insert(root->right, value); return root; } struct Node* minNode(struct Node* root) { while (root && root->left) root = root->left; return root; } struct Node* deleteNode(struct Node* root, int value) { struct Node* temp; if (!root) return root; if (value < root->value) root->left = deleteNode(root->left, value); else if (value > root->value) root->right = deleteNode(root->right, value); else { if (!root->left) { struct Node* temp = root->right; free(root); return temp; } else if (!root->right) { struct Node* temp = root->left; free(root); return temp; } temp = minNode(root->right); root->value = temp->value; root->right = deleteNode(root->right, temp->value); } return root; } void inorder(struct Node* root) { if (root) { inorder(root->left); printf("%d ", root->value); inorder(root->right); } } void main() { struct Node* root = NULL; clrscr(); root = insert(root, 50); root = insert(root, 30); root = insert(root, 20); root = insert(root, 40); root = insert(root, 70); root = insert(root, 60); root = insert(root, 80); inorder(root); printf("\n"); root = deleteNode(root, 20); inorder(root); printf("\n"); root = deleteNode(root, 30); inorder(root); printf("\n"); getch(); }
+
+6)Multiprogramming-Memory management-Implementation of fork (), wait (), exec() and exit (), System calls
+#include <stdio.h>
+#include <stdlib.h>
+#include <dos.h>
+void childProcess() {
+printf("Child process.\n");
+delay(1000);
+}
+void parentProcess() {
+printf("Parent process.\n");
+childProcess();
+}
+void executeCommand(const char *command) {
+printf("Command: %s\n", command);
+system(command);
+}
+void main() {
+clrscr();
+printf("Simulating fork(), wait(), exec(), exit() in DOS.\n");
+parentProcess();
+executeCommand("dir");
+printf("Exiting program.\n");
+exit(0);
+getch();
+}
+
+FCFS
+#include <stdio.h>
+int main() {
+    int n, i, burst_time[50], waiting_time[50], turnaround_time[50];
+    int total_waiting_time = 0, total_turnaround_time = 0;
+    printf("Enter the number of processes: ");
+    scanf("%d", &n);
+    printf("Enter the burst times of the processes:\n");
+    for (i = 0; i < n; i++) {
+        printf("Process %d: ", i + 1);
+        scanf("%d", &burst_time[i]);
+    }
+    waiting_time[0] = 0;
+    for (i = 1; i < n; i++) {
+        waiting_time[i] = burst_time[i - 1] + waiting_time[i - 1];
+    }
+    for (i = 0; i < n; i++) {
+        turnaround_time[i] = burst_time[i] + waiting_time[i];
+    }
+    printf("\nProcess\tBurst Time\tWaiting Time\tTurnaround Time\n");
+    for (i = 0; i < n; i++) {
+        total_waiting_time += waiting_time[i];
+        total_turnaround_time += turnaround_time[i];
+        printf("%d\t%d\t\t%d\t\t%d\n", i + 1, burst_time[i], waiting_time[i], turnaround_time[i]);
+    }
+    printf("\nAverage Waiting Time: %.2f", (float)total_waiting_time / n);
+    printf("\nAverage Turnaround Time: %.2f", (float)total_turnaround_time / n);
+    return 0;
+}
+SJF
+#include <stdio.h>
+int main() {
+    int n, i, j, burst_time[50], waiting_time[50], turnaround_time[50], temp;
+    int total_waiting_time = 0, total_turnaround_time = 0;
+    printf("Enter the number of processes: ");
+    scanf("%d", &n);
+    printf("Enter the burst times of the processes:\n");
+    for (i = 0; i < n; i++) {
+        printf("Process %d: ", i + 1);
+        scanf("%d", &burst_time[i]);
+    }
+    for (i = 0; i < n-1; i++) {
+        for (j = i+1; j < n; j++) {
+            if (burst_time[i] > burst_time[j]) {
+                temp = burst_time[i];
+                burst_time[i] = burst_time[j];
+                burst_time[j] = temp;
+            }
+        }
+    }
+    waiting_time[0] = 0;
+    for (i = 1; i < n; i++) {
+        waiting_time[i] = burst_time[i - 1] + waiting_time[i - 1];
+    }
+    for (i = 0; i < n; i++) {
+        turnaround_time[i] = burst_time[i] + waiting_time[i];
+    }
+    printf("\nProcess\tBurst Time\tWaiting Time\tTurnaround Time\n");
+    for (i = 0; i < n; i++) {
+        total_waiting_time += waiting_time[i];
+        total_turnaround_time += turnaround_time[i];
+        printf("%d\t%d\t\t%d\t\t%d\n", i + 1, burst_time[i], waiting_time[i], turnaround_time[i]);
+    }
+    printf("\nAverage Waiting Time: %.2f", (float)total_waiting_time / n);
+    printf("\nAverage Turnaround Time: %.2f", (float)total_turnaround_time / n);
+    return 0;
+}
+C)priority:
+#include <stdio.h>
+int main() {
+    int n, i, j, burst_time[50], waiting_time[50], turnaround_time[50], priority[50], temp;
+    int total_waiting_time = 0, total_turnaround_time = 0;
+    printf("Enter the number of processes: ");
+    scanf("%d", &n);
+    printf("Enter the burst times and priorities of the processes:\n");
+    for (i = 0; i < n; i++) {
+        printf("Process %d burst time: ", i + 1);
+        scanf("%d", &burst_time[i]);
+        printf("Process %d priority: ", i + 1);
+        scanf("%d", &priority[i]);
+    }
+    for (i = 0; i < n-1; i++) {
+        for (j = i+1; j < n; j++) {
+            if (priority[i] > priority[j]) {
+                temp = burst_time[i];
+                burst_time[i] = burst_time[j];
+                burst_time[j] = temp;
+                temp = priority[i];
+                priority[i] = priority[j];
+                priority[j] = temp;
+            }
+        }
+    }
+    waiting_time[0] = 0;
+    for (i = 1; i < n; i++) {
+        waiting_time[i] = burst_time[i - 1] + waiting_time[i - 1];
+    }
+    for (i = 0; i < n; i++) {
+        turnaround_time[i] = burst_time[i] + waiting_time[i];
+    }
+    printf("\nProcess\tBurst Time\tPriority\tWaiting Time\tTurnaround Time\n");
+    for (i = 0; i < n; i++) {
+        total_waiting_time += waiting_time[i];
+        total_turnaround_time += turnaround_time[i];
+        printf("%d\t%d\t\t%d\t\t%d\t\t%d\n", i + 1, burst_time[i], priority[i], waiting_time[i], turnaround_time[i]);
+    }
+    printf("\nAverage Waiting Time: %.2f", (float)total_waiting_time / n);
+    printf("\nAverage Turnaround Time: %.2f", (float)total_turnaround_time / n);
+    return 0;
+}
+Round Robin)
+#include <stdio.h>
+int main() {
+    int n, i, j, time_quantum, burst_time[50], remaining_time[50], waiting_time[50], turnaround_time[50];
+    int total_waiting_time = 0, total_turnaround_time = 0, time = 0, count = 0;
+    printf("Enter the number of processes: ");
+    scanf("%d", &n);
+    printf("Enter the time quantum: ");
+    scanf("%d", &time_quantum);
+    printf("Enter the burst times of the processes:\n");
+    for (i = 0; i < n; i++) {
+        printf("Process %d: ", i + 1);
+        scanf("%d", &burst_time[i]);
+        remaining_time[i] = burst_time[i];
+    }
+    while (count < n) {
+        for (i = 0; i < n; i++) {
+            if (remaining_time[i] > 0) {
+                if (remaining_time[i] > time_quantum) {
+                    remaining_time[i] -= time_quantum;
+                    time += time_quantum;
+                } else {
+                    time += remaining_time[i];
+                    waiting_time[i] = time - burst_time[i];
+                    turnaround_time[i] = waiting_time[i] + burst_time[i];
+                    total_waiting_time += waiting_time[i];
+                    total_turnaround_time += turnaround_time[i];
+                    remaining_time[i] = 0;
+                    count++;
+                }
+            }
+        }
+    }
+    printf("\nProcess\tBurst Time\tWaiting Time\tTurnaround Time\n");
+    for (i = 0; i < n; i++) {
+        printf("%d\t%d\t\t%d\t\t%d\n", i + 1, burst_time[i], waiting_time[i], turnaround_time[i]);
+    }
+    printf("\nAverage Waiting Time: %.2f", (float)total_waiting_time / n);
+    printf("\nAverage Turnaround Time: %.2f", (float)total_turnaround_time / n);
+    return 0;
+}
+3a)MFT
+#include<stdio.h> 
+#include<conio.h> 
+void main()
+{
+int ms,bs,nob,ef,n,mp[10],tif=0;
+int i,p=0;
+clrscr();
+printf("Enter the total memory available (in Bytes) -- ");
+scanf("%d",&ms);
+printf("Enter the block size (in Bytes) -- ");
+scanf("%d", &bs);
+nob=ms/bs; ef=ms - nob*bs;
+printf("\nEnter the number of processes -- ");
+scanf("%d",&n);
+for(i=0;i<n;i++)
+{
+printf("Enter memory required for process %d (in Bytes)-- ",i+1);
+scanf("%d",&mp[i]);
+}
+printf("\nNo. of Blocks available in memory -- %d",nob);
+printf("\n\nPROCESS\tMEMORY REQUIRED\t ALLOCATED\tINTERNAL FRAGMENTATION");
+for(i=0;i<n && p<nob;i++)
+{
+printf("\n %d\t\t%d",i+1,mp[i]);
+if(mp[i] > bs)
+printf("\t\tNO\t\t---");
+else
+{
+printf("\t\tYES\t%d",bs-mp[i]);
+tif = tif + bs-mp[i];
+p++;
+}
+}
+if(i<n)
+printf("\nMemory is Full, Remaining Processes cannot be accomodated");
+printf("\n\nTotal Internal Fragmentation is %d",tif);
+printf("\nTotal External Fragmentation is %d",ef);
+getch();
+}
 
 
-16a)Bubble sort #include <stdio.h> void bubbleSort(int arr[], int n){ int i,j; for( i=0;i<n-1;i++){ for( j=0;j<n-1-i;j++){ if(arr[j]>arr[j+1]){ int temp=arr[j]; arr[j]=arr[j+1]; arr[j+1]=temp; }} }} void main() { int i,n,arr[26]; clrscr(); printf("Enter the number of elements: "); scanf("%d",&n); printf("Enter the elements:\n"); for( i=0;i<n;i++){ scanf("%d",&arr[i]);} bubbleSort(arr,n); printf("Sorted list in ascending order:\n"); for( i=0;i<n;i++){ printf("%d ",arr[i]);} printf("\n"); getch(); }
+3b)MVT
+#include<stdio.h> 
+#include<conio.h> 
+void main()
+{
+int ms,mp[10],i, temp,n=0; char ch = 'y';
+clrscr();
+printf("\nEnter the total memory available (in Bytes)-- ");
+scanf("%d",&ms);
+temp=ms; for(i=0;ch=='y';i++,n++)
+{
+printf("\nEnter memory required for process %d (in Bytes) -- ",i+1);
+scanf("%d",&mp[i]);
+if(mp[i]<=temp)
+{
+printf("\nMemory is allocated for Process %d ",i+1);
+temp = temp - mp[i];
+}
+else
+{
+printf("\nMemory is Full"); break;
+}
+printf("\nDo you want to continue(y/n) -- ");
+scanf(" %c", &ch);
+}
+printf("\n\nTotal Memory Available -- %d", ms);
+printf("\n\n\tPROCESS\t\t MEMORY ALLOCATED ");
+for(i=0;i<n;i++)
+printf("\n \t%d\t\t%d",i+1,mp[i]);
+printf("\n\nTotal Memory Allocated is %d",ms-temp);
+printf("\nTotal External Fragmentation is %d",temp);
+getch();
+}
 
-16b)Quick sort #include <stdio.h> int partition(int arr[], int low, int high) { int pivot = arr[high], i = low - 1, j, temp; for ( j = low; j < high; j++) { if (arr[j] < pivot) { i++; temp = arr[i]; arr[i] = arr[j]; arr[j] = temp; }} temp = arr[i + 1]; arr[i + 1] = arr[high]; arr[high] = temp; return i + 1; } void quickSort(int arr[], int low, int high) { if (low < high) { int pi = partition(arr, low, high); quickSort(arr, low, pi - 1); quickSort(arr, pi + 1, high); }} void main() { int i,n,arr[26]; clrscr(); printf("Enter the number of elements: "); scanf("%d", &n); printf("Enter %d elements: ", n); for ( i = 0; i < n; i++) scanf("%d", &arr[i]); quickSort(arr, 0, n - 1); printf("Sorted array: "); for ( i = 0; i < n; i++) printf("%d ", arr[i]); printf("\n"); getch(); }
 
-16c)Merge sort #include <stdio.h> void merge(int arr[], int left, int mid, int right) { int n1 = mid - left + 1, n2 = right - mid, L[26], R[26], i, j = 0, k = left; for (i = 0; i < n1; i++) L[i] = arr[left + i]; for (i = 0; i < n2; i++) R[i] = arr[mid + 1 + i]; i = 0; while (i < n1 && j < n2) arr[k++] = (L[i] <= R[j]) ? L[i++] : R[j++]; while (i < n1) arr[k++] = L[i++]; while (j < n2) arr[k++] = R[j++]; } void mergeSort(int arr[], int left, int right) { if (left < right) { int mid = left + (right - left) / 2; mergeSort(arr, left, mid); mergeSort(arr, mid + 1, right); merge(arr, left, mid, right); }} void main() { int n, i, arr[26]; clrscr(); printf("Enter the number of elements: "); scanf("%d", &n); printf("Enter %d elements:\n", n); for (i = 0; i < n; i++) scanf("%d", &arr[i]); mergeSort(arr, 0, n - 1); printf("Sorted array: "); for (i = 0; i < n; i++) printf("%d ", arr[i]); printf("\n"); getch(); }
+4)implement first fit, best fit and worst fit algorithm for memory management. 
+#include <stdio.h>
+#define BLOCKS 5
+#define PROCESSES 3
+void allocateMemory(int blocks[], int m, int processes[], int n, int choice) {
+    int i, j, idx;
+    for (i = 0; i < n; i++) {
+        idx = -1;
+        for (j = 0; j < m; j++) {
+            if (blocks[j] >= processes[i] && (choice == 1 || (choice == 2 && (idx == -1 || blocks[j] < blocks[idx])) || (choice == 3 && (idx == -1 || blocks[j] > blocks[idx])))) {
+                idx = j;
+            }
+	}
+	if (idx != -1) {
+	    printf("P%d allocated to B%d\n", i + 1, idx + 1);
+	    blocks[idx] -= processes[i];
+	} else {
+	    printf("P%d cannot be allocated\n", i + 1);
+	}
+    }
+}
+void main() {
+    int blocks[BLOCKS], processes[PROCESSES], i, blocks1[BLOCKS], blocks2[BLOCKS], blocks3[BLOCKS];
+    clrscr();
+    printf("Enter the sizes of %d blocks:\n", BLOCKS);
+    for (i = 0; i < BLOCKS; i++) {
+	printf("Block %d: ", i + 1);
+	scanf("%d", &blocks[i]);
+    }
+    printf("Enter the sizes of %d processes:\n", PROCESSES);
+    for (i = 0; i < PROCESSES; i++) {
+	printf("Process %d: ", i + 1);
+	scanf("%d", &processes[i]);
+    }
+    for (i = 0; i < BLOCKS; i++) {
+	blocks1[i] = blocks[i];
+	blocks2[i] = blocks[i];
+	blocks3[i] = blocks[i];
+    }
+    printf("\nFirst Fit:\n");
+    allocateMemory(blocks1, BLOCKS, processes, PROCESSES, 1);
+    printf("\nBest Fit:\n");
+    allocateMemory(blocks2, BLOCKS, processes, PROCESSES, 2);
+    printf("\nWorst Fit:\n");
+    allocateMemory(blocks3, BLOCKS, processes, PROCESSES, 3);
+    getch();
+}
+5 Dead lock Avoidance
+#include <stdio.h>
+#include <stdbool.h>
+
+#define MAX 10
+#define RESOURCES 3
+#define PROCESSES 5
+
+int available[RESOURCES];
+int max[PROCESSES][RESOURCES];
+int allocation[PROCESSES][RESOURCES];
+int need[PROCESSES][RESOURCES];
+
+bool isSafeState() {
+ int work[RESOURCES], finish[PROCESSES] = {0};
+ for (int i = 0; i < RESOURCES; i++) work[i] = available[i];
+ int count = 0;
+ while (count < PROCESSES) {
+  bool found = false;
+  for (int i = 0; i < PROCESSES; i++) {
+   if (finish[i] == 0) {
+    bool canAllocate = true;
+    for (int j = 0; j < RESOURCES; j++) {
+     if (need[i][j] > work[j]) {
+      canAllocate = false;
+      break;
+     }
+    }
+    if (canAllocate) {
+     for (int j = 0; j < RESOURCES; j++) work[j] += allocation[i][j];
+     finish[i] = 1;
+     count++;
+     found = true;
+    }
+   }
+  }
+  if (!found) return false;
+ }
+ return true;
+}
+
+int main() {
+ int i, j;
+ printf("Enter the number of processes: ");
+ int n;
+ scanf("%d", &n);
+ printf("Enter the number of resources: ");
+ int m;
+ scanf("%d", &m);
+ printf("Enter the available resources: ");
+ for (i = 0; i < m; i++) scanf("%d", &available[i]);
+ printf("Enter the maximum resources for each process:\n");
+ for (i = 0; i < n; i++) for (j = 0; j < m; j++) scanf("%d", &max[i][j]);
+ printf("Enter the allocated resources for each process:\n");
+ for (i = 0; i < n; i++) for (j = 0; j < m; j++) scanf("%d", &allocation[i][j]);
+ for (i = 0; i < n; i++) for (j = 0; j < m; j++) need[i][j] = max[i][j] - allocation[i][j];
+ if (isSafeState()) printf("System is in a safe state.\n");
+ else printf("System is not in a safe state.\n");
+ return 0;
+}
+6 )dead lock prevention :
+#include <stdio.h>
+#include <stdbool.h>
+
+#define MAX 10
+#define RESOURCES 3
+#define PROCESSES 5
+
+int available[RESOURCES];
+int max[PROCESSES][RESOURCES];
+int allocation[PROCESSES][RESOURCES];
+int need[PROCESSES][RESOURCES];
+
+bool isSafeState() {
+    int work[RESOURCES], finish[PROCESSES] = {0};
+    for (int i = 0; i < RESOURCES; i++) work[i] = available[i];
+    int count = 0;
+    while (count < PROCESSES) {
+        bool found = false;
+        for (int i = 0; i < PROCESSES; i++) {
+            if (finish[i] == 0) {
+                bool canAllocate = true;
+                for (int j = 0; j < RESOURCES; j++) {
+                    if (need[i][j] > work[j]) {
+                        canAllocate = false;
+                        break;
+                    }
+                }
+                if (canAllocate) {
+                    for (int j = 0; j < RESOURCES; j++) work[j] += allocation[i][j];
+                    finish[i] = 1;
+                    count++;
+                    found = true;
+                }
+            }
+        }
+        if (!found) return false;
+    }
+    return true;
+}
+
+int main() {
+    int i, j;
+    printf("Enter the number of processes: ");
+    int n;
+    scanf("%d", &n);
+    printf("Enter the number of resources: ");
+    int m;
+    scanf("%d", &m);
+    printf("Enter the available resources: ");
+    for (i = 0; i < m; i++) scanf("%d", &available[i]);
+    printf("Enter the maximum resources for each process:\n");
+    for (i = 0; i < n; i++) for (j = 0; j < m; j++) scanf("%d", &max[i][j]);
+    printf("Enter the allocated resources for each process:\n");
+    for (i = 0; i < n; i++) for (j = 0; j < m; j++) scanf("%d", &allocation[i][j]);
+    for (i = 0; i < n; i++) for (j = 0; j < m; j++) need[i][j] = max[i][j] - allocation[i][j];
+
+    if (isSafeState()) printf("System is in a safe state.\n");
+    else printf("System is not in a safe state.\n");
+    return 0;
+}
+7a)FIFO
+#include <stdio.h>
+#include <stdlib.h>
+#define MAX_FRAMES 3
+void fifoPageReplacement(int pages[], int n, int capacity) {
+int frames[MAX_FRAMES];
+int pageFaults = 0;
+int i, j, front = 0;
+for ( i = 0; i < capacity; i++) { frames[i] = -1; }
+for ( i = 0; i < n; i++) {
+int currentPage = pages[i];
+int pageFound = 0;
+for ( j = 0; j < capacity; j++) {
+if (frames[j] == currentPage) { pageFound = 1; break; }}
+if (!pageFound) {
+frames[front] = currentPage;
+front = (front + 1) % capacity;
+pageFaults++; }
+printf("Page %d loaded into memory.\n", currentPage);
+}
+printf("\nTotal page faults: %d\n", pageFaults);
+}
+void main() {
+int pages[] = {7, 0, 1, 2, 0, 3, 0, 4, 2, 3, 0, 3, 0};
+int n = sizeof(pages) / sizeof(pages[0]);
+int capacity = 3;
+clrscr();
+fifoPageReplacement(pages, n, capacity);
+getch();
+}
+
+
+7b)LRU
+#include <stdio.h>
+#define MAX_FRAMES 10
+void simulateLRU(int pages[], int numPages, int numFrames) {
+int frames[MAX_FRAMES] = {-1};
+int pageFaults = 0, i, j, found, lruIndex;
+for (i = 0; i < numPages; i++) {
+found = 0;
+for (j = 0; j < numFrames && !found; j++) { if (frames[j] == pages[i]) found = 1; }
+if (!found) { pageFaults++;
+for (j = 0; j < numFrames && frames[j] != -1; j++);
+if (j < numFrames) frames[j] = pages[i];
+else {
+lruIndex = 0;
+for (j = 1; j < numFrames; j++) {
+if (frames[j] != pages[i]) lruIndex = j; }
+frames[lruIndex] = pages[i]; }}
+printf("Frames: ");
+for (j = 0; j < numFrames; j++) {
+if (frames[j] != -1) printf("%d ", frames[j]);
+} printf("\n" ); }
+printf("Page faults: %d\n", pageFaults);
+}
+void main() {
+int pages[] = {7, 0, 1, 2, 0, 3, 0, 4, 2, 3, 0, 3, 2};
+int numPages = sizeof(pages) / sizeof(pages[0]);
+clrscr();
+simulateLRU(pages, numPages, 3);
+getch();
+}
+
+
+7c)LFU
+#include <stdio.h>
+#include <conio.h>
+typedef struct { int page, freq, lastUsed; } Page;
+int findLFU(Page f[], int n) { int i, idx = 0;
+for (i = 1; i < n; i++) {
+if (f[i].freq < f[idx].freq || (f[i].freq == f[idx].freq && f[i].lastUsed < f[idx].lastUsed)) {
+idx = i; }} return idx; }
+int lfu(int pages[], int n, int size) { Page f[26], temp;
+int i, j, count = 0, faults = 0;
+for (i = 0; i < n; i++) { int p = pages[i], found = 0;
+for (j = 0; j < count; j++) {
+if (f[j].page == p) { f[j].freq++; f[j].lastUsed = i;
+found = 1; break; }}
+if (!found) { faults++;
+if (count < size) {
+temp.page = p;
+temp.freq = 1;
+temp.lastUsed = i;
+f[count++] = temp; } else { int idx = findLFU(f, size);
+temp.page = p;
+temp.freq = 1;
+temp.lastUsed = i;
+f[idx] = temp;
+}}} return faults; }
+void main() {
+int pages[] = {1, 2, 3, 2, 1, 4, 2, 3};
+clrscr();
+printf("Page Faults: %d\n", lfu(pages, sizeof(pages) / sizeof(pages[0]), 3));
+getch(); }
+
+
+8a)Sequenced
+#include<stdio.h> 
+int main() 
+{ 
+int f[50], i, st, j, len, c, k; 
+clrscr();
+for(i = 0; i < 50; i++) f[i] = 0;
+X:
+printf("Enter starting block & length of file: ");
+scanf("%d%d", &st, &len);
+for(j = st; j < (st + len); j++)
+if(f[j] == 0)
+{
+f[j] = 1;
+printf("%d->%d\n", j, f[j]);
+}
+else
+{
+printf("Block already allocated");
+break;
+}
+if(j == (st + len))
+printf("File is allocated to disk");
+printf("\nWant to enter more files? (y-1/n-0): ");
+scanf("%d", &c);
+if(c == 1)
+goto X;
+else
+return 0;
+}
+
+
+8b)Indexed
+#include<stdio.h>
+int f[50],i,k,j,inde[50],n,c,count=0,p;
+int main()
+{
+clrscr();
+for(i=0;i<50;i++) f[i]=0;
+x: printf("Enter index block: "); scanf("%d",&p);
+if(f[p]==0)
+{ f[p]=1;
+printf("Enter no. of files on index: "); scanf("%d",&n);
+}
+else
+{
+printf("Block already allocated\n");
+goto x;
+}
+for(i=0;i<n;i++) scanf("%d",&inde[i]); for(i=0;i<n;i++) if(f[inde[i]]==1)
+{
+printf("Block already allocated");
+goto x;
+}
+for(j=0;j<n;j++) f[inde[j]]=1;
+printf("Allocated"); printf("\nFile indexed"); for(k=0;k<n;k++)
+printf("\n%d->%d:%d",p,inde[k],f[inde[k]]);
+printf("\nEnter 1 to enter more files or 0 to exit: "); scanf("%d",&c);
+if(c==1) goto x;
+else
+return 0;
+}
+
+
+8c)Linked
+#include<stdio.h>
+int main()  {
+int f[50],p,i,j,k,a,st,len,n,c;
+clrscr();
+for(i=0;i<50;i++) f[i]=0;
+printf("How many blocks are already allocated? : "); scanf("%d",&p);
+printf("Enter block no's that are already allocated: ");
+for(i=0;i<p;i++) {
+scanf("%d",&a); f[a]=1;
+}
+X:
+printf("Enter starting index block & length: "); scanf("%d%d",&st,&len); k=len;
+for(j=st;j<(k+st);j++)
+{
+if(f[j]==0)
+{ f[j]=1;
+printf("%d->%d\n",j,f[j]);
+}
+else
+{
+printf("%d->File is already allocated\n",j);
+k++;
+}
+}
+printf("Want to enter one more file? (yes-1/no-0): ");
+scanf("%d",&c); if(c==1)
+goto X; else
+return 0;
+}
+
+
