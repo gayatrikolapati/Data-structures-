@@ -38,8 +38,3 @@ if (isSafeState()) printf("System is in a safe state.\n"); else printf("System i
 
 8c)Linked #include<stdio.h> int main() { int f[50],p,i,j,k,a,st,len,n,c; clrscr(); for(i=0;i<50;i++) f[i]=0; printf("How many blocks are already allocated? : "); scanf("%d",&p); printf("Enter block no's that are already allocated: "); for(i=0;i<p;i++) { scanf("%d",&a); f[a]=1; } X: printf("Enter starting index block & length: "); scanf("%d%d",&st,&len); k=len; for(j=st;j<(k+st);j++) { if(f[j]==0) { f[j]=1; printf("%d->%d\n",j,f[j]); } else { printf("%d->File is already allocated\n",j); k++; } } printf("Want to enter one more file? (yes-1/no-0): "); scanf("%d",&c); if(c==1) goto X; else return 0; }
 
-prime or not)#!/bin/bash
-echo "Enter a number:" read num if ! [[ "$num" =~ ^[0-9]+$ ]]; then echo "Please enter a valid number." exit 1 fi
-if [ $num -le 1 ]; then echo "$num is not a prime number." exit 0 fi
-is_prime=1 for (( i=2; i<=$((num/2)); i++ )) do if [ $((num % i)) -eq 0 ]; then is_prime=0 break fi done
-if [ $is_prime -eq 1 ]; then echo "$num is a prime number." else echo "$num is not a prime number." fi
