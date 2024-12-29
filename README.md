@@ -77,11 +77,138 @@ else printf("System is not in a safe state.\n");
 return 0;
 } 
 
-7a)FIFO #include <stdio.h> #include <stdlib.h> #define MAX_FRAMES 3 void fifoPageReplacement(int pages[], int n, int capacity) { int frames[MAX_FRAMES]; int pageFaults = 0; int i, j, front = 0; for ( i = 0; i < capacity; i++) { frames[i] = -1; } for ( i = 0; i < n; i++) { int currentPage = pages[i]; int pageFound = 0; for ( j = 0; j < capacity; j++) { if (frames[j] == currentPage) { pageFound = 1; break; }} if (!pageFound) { frames[front] = currentPage; front = (front + 1) % capacity; pageFaults++; } printf("Page %d loaded into memory.\n", currentPage); } printf("\nTotal page faults: %d\n", pageFaults); } void main() { int pages[] = {7, 0, 1, 2, 0, 3, 0, 4, 2, 3, 0, 3, 0}; int n = sizeof(pages) / sizeof(pages[0]); int capacity = 3; clrscr(); fifoPageReplacement(pages, n, capacity); getch(); }
+7a)#include <stdio.h>
+#include <stdlib.h>
+#define MAX_FRAMES 3
+void fifoPageReplacement(int pages[], int n, int capacity) {
+    int frames[MAX_FRAMES], pageFaults = 0, i, j, front = 0;
+    for (i = 0; i < capacity; i++) frames[i] = -1;
+    for (i = 0; i < n; i++) {
+        int currentPage = pages[i], pageFound = 0;
+        for (j = 0; j < capacity; j++) {
+            if (frames[j] == currentPage) {
+                pageFound = 1;
+                break;
+            }
+        }
+        if (!pageFound) {
+            frames[front] = currentPage;
+            front = (front + 1) % capacity;
+            pageFaults++;
+        }
+        printf("Page %d loaded into memory.\n", currentPage);
+    }
+    printf("\nTotal page faults: %d\n", pageFaults);
+}
+void main() {
+    int n, capacity = 3;
+    printf("Enter number of pages: ");
+    scanf("%d", &n);
+    int pages[n];
+    printf("Enter the pages:\n");
+    for (int i = 0; i < n; i++) scanf("%d", &pages[i]);
+    fifoPageReplacement(pages, n, capacity);
+}
 
-7b)LRU #include <stdio.h> #define MAX_FRAMES 10 void simulateLRU(int pages[], int numPages, int numFrames) { int frames[MAX_FRAMES] = {-1}; int pageFaults = 0, i, j, found, lruIndex; for (i = 0; i < numPages; i++) { found = 0; for (j = 0; j < numFrames && !found; j++) { if (frames[j] == pages[i]) found = 1; } if (!found) { pageFaults++; for (j = 0; j < numFrames && frames[j] != -1; j++); if (j < numFrames) frames[j] = pages[i]; else { lruIndex = 0; for (j = 1; j < numFrames; j++) { if (frames[j] != pages[i]) lruIndex = j; } frames[lruIndex] = pages[i]; }} printf("Frames: "); for (j = 0; j < numFrames; j++) { if (frames[j] != -1) printf("%d ", frames[j]); } printf("\n" ); } printf("Page faults: %d\n", pageFaults); } void main() { int pages[] = {7, 0, 1, 2, 0, 3, 0, 4, 2, 3, 0, 3, 2}; int numPages = sizeof(pages) / sizeof(pages[0]); clrscr(); simulateLRU(pages, numPages, 3); getch(); }
 
-7c)LFU #include <stdio.h> #include <conio.h> typedef struct { int page, freq, lastUsed; } Page; int findLFU(Page f[], int n) { int i, idx = 0; for (i = 1; i < n; i++) { if (f[i].freq < f[idx].freq || (f[i].freq == f[idx].freq && f[i].lastUsed < f[idx].lastUsed)) { idx = i; }} return idx; } int lfu(int pages[], int n, int size) { Page f[26], temp; int i, j, count = 0, faults = 0; for (i = 0; i < n; i++) { int p = pages[i], found = 0; for (j = 0; j < count; j++) { if (f[j].page == p) { f[j].freq++; f[j].lastUsed = i; found = 1; break; }} if (!found) { faults++; if (count < size) { temp.page = p; temp.freq = 1; temp.lastUsed = i; f[count++] = temp; } else { int idx = findLFU(f, size); temp.page = p; temp.freq = 1; temp.lastUsed = i; f[idx] = temp; }}} return faults; } void main() { int pages[] = {1, 2, 3, 2, 1, 4, 2, 3}; clrscr(); printf("Page Faults: %d\n", lfu(pages, sizeof(pages) / sizeof(pages[0]), 3)); getch(); }
+7b)LRU #include <stdio.h>
+#define MAX_FRAMES 10
+void simulateLRU(int pages[], int numPages, int numFrames) {
+    int frames[MAX_FRAMES] = {-1}, pageFaults = 0, i, j, found, lruIndex;
+    for (i = 0; i < numPages; i++) {
+        found = 0;
+        for (j = 0; j < numFrames && !found; j++) {
+            if (frames[j] == pages[i]) found = 1;
+        }
+        if (!found) {
+            pageFaults++;
+            for (j = 0; j < numFrames && frames[j] != -1; j++);
+            if (j < numFrames) frames[j] = pages[i];
+            else {
+                lruIndex = 0;
+                for (j = 1; j < numFrames; j++) {
+                    if (frames[j] != pages[i]) lruIndex = j;
+                }
+                frames[lruIndex] = pages[i];
+            }
+        }
+        printf("Frames: ");
+        for (j = 0; j < numFrames; j++) {
+            if (frames[j] != -1) printf("%d ", frames[j]);
+        }
+        printf("\n");
+    }
+    printf("Page faults: %d\n", pageFaults);
+}
+void main() {
+    int numPages, numFrames = 3, i;
+    printf("Enter number of pages: ");
+    scanf("%d", &numPages);
+    int pages[numPages];
+    printf("Enter the pages: ");
+    for (i = 0; i < numPages; i++) scanf("%d", &pages[i]);
+    simulateLRU(pages, numPages, numFrames);
+}
+
+
+7c)LFU#include <stdio.h>
+#include <conio.h>
+typedef struct { int page, freq, lastUsed; } Page;
+int findLFU(Page f[], int n) {
+    int i, idx = 0;
+    for (i = 1; i < n; i++) {
+        if (f[i].freq < f[idx].freq || (f[i].freq == f[idx].freq && f[i].lastUsed < f[idx].lastUsed)) {
+            idx = i;
+        }
+    }
+    return idx;
+}
+int lfu(int pages[], int n, int size) {
+    Page f[26], temp;
+    int i, j, count = 0, faults = 0;
+    for (i = 0; i < n; i++) {
+        int p = pages[i], found = 0;
+        for (j = 0; j < count; j++) {
+            if (f[j].page == p) {
+                f[j].freq++;
+                f[j].lastUsed = i;
+                found = 1;
+                break;
+            }
+        }
+        if (!found) {
+            faults++;
+            if (count < size) {
+                temp.page = p;
+                temp.freq = 1;
+                temp.lastUsed = i;
+                f[count++] = temp;
+            } else {
+                int idx = findLFU(f, size);
+                temp.page = p;
+                temp.freq = 1;
+                temp.lastUsed = i;
+                f[idx] = temp;
+            }
+        }
+    }
+    return faults;
+}
+void main() {
+    int n, size, i;
+    printf("Enter number of pages: ");
+    scanf("%d", &n);
+    printf("Enter page size: ");
+    scanf("%d", &size);
+    int pages[n];
+    printf("Enter the pages: ");
+    for (i = 0; i < n; i++) {
+        scanf("%d", &pages[i]);
+    }
+    printf("Page Faults: %d\n", lfu(pages, n, size));
+    getch();
+}
+
 
 8a)Sequenced #include<stdio.h> int main() { int f[50], i, st, j, len, c, k; clrscr(); for(i = 0; i < 50; i++) f[i] = 0; X: printf("Enter starting block & length of file: "); scanf("%d%d", &st, &len); for(j = st; j < (st + len); j++) if(f[j] == 0) { f[j] = 1; printf("%d->%d\n", j, f[j]); } else { printf("Block already allocated"); break; } if(j == (st + len)) printf("File is allocated to disk"); printf("\nWant to enter more files? (y-1/n-0): "); scanf("%d", &c); if(c == 1) goto X; else return 0; }
 
