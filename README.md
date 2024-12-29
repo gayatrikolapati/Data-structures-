@@ -221,8 +221,6 @@ prime or not)#!/bin/bash
 
 echo "Enter a number:"
 read num
-
-# Check if the user input is a valid number
 if ! [[ "$num" =~ ^[0-9]+$ ]]; then
   echo "Please enter a valid number."
   exit 1
