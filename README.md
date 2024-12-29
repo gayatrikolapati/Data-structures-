@@ -3,7 +3,6 @@
 #include <stdlib.h>
 #include <dirent.h>
 void list_files(const char *dir_path);
-
 int main() {
     const char *dir_path = ".";
     list_files(dir_path);
