@@ -1,6 +1,37 @@
-4)emulate the UNIX ls –l command #include <stdio.h> #include <conio.h> #include <dos.h> #include <dir.h> #include <time.h> void display_file_info(struct ffblk file); void main() { struct ffblk file; int done; clrscr(); done = findfirst(".", &file, FA_ARCH | FA_RDONLY | FA_HIDDEN | FA_DIREC); printf("Attributes Size Date Time Name\n"); printf("------------------------------------------------------\n"); while (!done) { display_file_info(file); done = findnext(&file); } getch(); } void display_file_info(struct ffblk file) { struct tm *time_info; unsigned year, month, day, hour, minute, second; printf("%c", (file.ff_attrib & FA_RDONLY) ? 'r' : '-'); printf("%c", (file.ff_attrib & FA_HIDDEN) ? 'h' : '-'); printf("%c", (file.ff_attrib & FA_SYSTEM) ? 's' : '-'); printf("%c", (file.ff_attrib & FA_DIREC) ? 'd' : '-'); printf("%c", (file.ff_attrib & FA_ARCH) ? 'a' : '-'); printf(" "); printf("%8lu", file.ff_fsize); year = ((file.ff_fdate >> 9) & 0x7F) + 1980; month = (file.ff_fdate >> 5) & 0x0F; day = file.ff_fdate & 0x1F; hour = (file.ff_ftime >> 11) & 0x1F; minute = (file.ff_ftime >> 5) & 0x3F; second = (file.ff_ftime & 0x1F) * 2; printf(" %02d-%02d-%04d", day, month, year); printf(" %02d:%02d:%02d", hour, minute, second); printf(" %s\n", file.ff_name); }
+4)emulate the UNIX ls –l command
+#include <stdio.h>
+#include <stdlib.h>
+#include <dirent.h>
+void list_files(const char *dir_path);
 
-5)how to execute two commands concurrently with a command pipe. Ex: - ls –l | sort #include<stdio.h> #include<stdlib.h> void main() { clrscr(); system("dir | sort"); //system("ls -l | sort"); getch(); }
+int main() {
+    const char *dir_path = ".";
+    list_files(dir_path);
+    return 0;
+}
+void list_files(const char *dir_path) {
+    DIR *dir;
+    struct dirent *entry;
+    dir = opendir(dir_path);
+    if (dir == NULL) {
+        perror("opendir");
+        exit(EXIT_FAILURE);
+    }
+    while ((entry = readdir(dir)) != NULL) {
+        printf("%s\n", entry->d_name);
+    }
+    closedir(dir);
+}
+
+5)how to execute two commands concurrently with a command pipe. Ex: - ls –l | sort
+#include <stdio.h>
+#include <stdlib.h>
+
+int main() {
+    system("ls -1 | sort");
+    return 0;
+}
+
 
 6)Multiprogramming-Memory management-Implementation of fork (), wait (), exec() and exit (), System calls #include <stdio.h> #include <stdlib.h> #include <dos.h> void childProcess() { printf("Child process.\n"); delay(1000); } void parentProcess() { printf("Parent process.\n"); childProcess(); } void executeCommand(const char *command) { printf("Command: %s\n", command); system(command); } void main() { clrscr(); printf("Simulating fork(), wait(), exec(), exit() in DOS.\n"); parentProcess(); executeCommand("dir"); printf("Exiting program.\n"); exit(0); getch(); }
 
