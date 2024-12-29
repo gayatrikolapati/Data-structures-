@@ -77,7 +77,8 @@ else printf("System is not in a safe state.\n");
 return 0;
 } 
 
-7a)#include <stdio.h>
+7a)FIFO:
+#include <stdio.h>
 #include <stdlib.h>
 #define MAX_FRAMES 3
 void fifoPageReplacement(int pages[], int n, int capacity) {
