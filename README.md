@@ -25,7 +25,6 @@ void list_files(const char *dir_path) {
 5)how to execute two commands concurrently with a command pipe. Ex: - ls –l | sort
 #include <stdio.h>
 #include <stdlib.h>
-
 int main() {
     system("ls -1 | sort");
     return 0;
